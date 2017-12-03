@@ -1,0 +1,76 @@
+<!-- CUstomer Reactive Form -->
+<h2> Customer Form </h2>
+<div class="well well-lg">
+  <form [formGroup]="form" (ngSubmit)="onSave(form.value)">
+      <div class="form-group">
+          <label for="name">Name</label>
+          <input 
+              type="text" 
+              class="form-control" 
+              id="name"
+              name="name"
+              formControlName="name">
+              <div *ngIf="form.controls['name'].errors && (form.controls['name'].touched || form.controls['name'].dirty)"
+              class="alert alert-danger">
+              <div *ngIf="form.controls['name'].hasError('required')">Name is required</div>
+              <div *ngIf="form.controls['name'].hasError('pattern')">Only alphabets allowed</div>
+              </div>
+      </div>
+      <div class="form-group">
+              <label for="phone">Contact</label>
+              <input type="text" class="form-control" 
+                  id="phone"
+                  name="phone"
+                  formControlName="phone">
+                  <div *ngIf="form.controls['phone'].errors && (form.controls['phone'].touched || form.controls['phone'].dirty)"
+                  class="alert alert-danger">
+                  <div *ngIf="form.controls['phone'].hasError('minlength')">Mobile should be minimum 10 digit</div>
+                  <div *ngIf="form.controls['phone'].hasError('maxlength')">Mobile cannot exceed 10 digit</div>
+                  <div *ngIf="form.controls['phone'].hasError('required')">Mobile is required</div>
+                  <div *ngIf="form.controls['phone'].hasError('pattern')">Mobile number should be only numbers</div>
+                  </div>
+      </div>
+     <div class="form-group">
+              <label for="customerEmail">Email</label>
+              <input type="text" class="form-control" 
+                  id="customerEmail"
+                  name="customerEmail"
+                  formControlName="email">
+     </div>
+      <div class="form-group">
+          <label for="customerCity">City</label>
+          <select class="form-control" id="CustomerCity" name="CustomerCity" formControlName="city">
+            <option [value]="null" [disabled]="true">Select Option </option>
+            <option *ngFor="let c of cityList">{{c}}</option>
+            </select>
+      </div>
+      <button name="save" type="submit" [disabled]="form.invalid"
+          class="btn btn-success">
+          Save
+      </button>
+  </form>
+</div>
+<!-- Showing the customer detail -->
+<div *ngIf="showDetail">
+<h2>Customer Details </h2>
+<div class="panel panel-primary" *ngFor="let cus of customerList">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <!-- Customer name -->
+        {{ cus.name }}
+      </h3>
+    </div>
+    <div class="panel-body">
+        <!-- Contact -->
+        {{ cus.phone }}
+    </div>
+    <div class="panel-body">
+      <!-- email -->
+      {{cus.email}}
+    </div>
+    <div class="panel-body">
+      <!-- customer city -->
+      {{cus.city}}
+    </div>
+</div>
+</div>
